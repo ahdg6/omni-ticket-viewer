@@ -3645,6 +3645,7 @@ __metadata:
     postcss: "npm:^8.4.39"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
+    react-fetch-hook: "npm:^1.9.5"
     tailwindcss: "npm:^3.4.4"
     typescript: "npm:^5.2.2"
     vite: "npm:^5.3.1"
@@ -4132,6 +4133,15 @@ __metadata:
     react: ">= 16.3.0"
     react-dom: ">= 16.3.0"
   checksum: 10c0/1e8cf47414a8554caa68447e5f27749bc40e1eabb4806e2dadcb39ab081d263f517d6aaec5231677e6b425603037c7e3386d1549898f9ffcc98a86cabafb2b9a
+  languageName: node
+  linkType: hard
+
+"react-fetch-hook@npm:^1.9.5":
+  version: 1.9.5
+  resolution: "react-fetch-hook@npm:1.9.5"
+  peerDependencies:
+    react: ">=16.8.0 <19.0.0"
+  checksum: 10c0/81083d0f65eb778f6bc874608f5b10d972114929ec3f81b584fa6fdae9ceeaf06db1341d1ec9a3f00ed28bfb5c399d6eb331a796ce62d6822f4b9949f93ddc29
   languageName: node
   linkType: hard
 
