@@ -12,16 +12,19 @@ export default function TicketParticipants({
 
   return (
     <div className="flex flex-col gap-3">
-      {Object.values(participants).map((participant) => (
-        <div key={participant.name} className="flex gap-3 items-center">
-          <Avatar
-            src={participant.avatarUrl}
-            alt={participant.name}
-            size="small"
-          />
-          <span>{participant.name}</span>
-        </div>
-      ))}
+      {Object.keys(participants).map((participantId) => {
+        const participant = participants[participantId]
+        return (
+          <div key={participantId} className="flex gap-3 items-center">
+            <Avatar
+              src={participant.avatarUrl}
+              alt={participant.name}
+              size="small"
+            />
+            <span>{participant.name}</span>
+          </div>
+        )
+      })}
     </div>
   )
 }

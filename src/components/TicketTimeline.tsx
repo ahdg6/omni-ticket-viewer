@@ -47,7 +47,7 @@ export default function TicketTimeline({ ticket }: TicketTimelineProps) {
       <Timeline.Item
         type={getTimelineItemType(item.label)}
         time={new Date(item.timestamp).toLocaleString()}
-        key={item.timestamp}
+        key={item.label + item.timestamp + item.userId}
       >
         <div className="flex gap-2">
           <span>{item.label}</span>

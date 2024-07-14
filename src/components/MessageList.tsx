@@ -8,7 +8,7 @@ interface MessageListProps {
 export default function MessageList({ ticket }: MessageListProps) {
   const messages = ticket.conversation.map((message) => (
     <MessagePreview
-      key={message.timestamp + message.senderId}
+      key={message.id}
       message={message}
       participants={ticket.participants}
     />
