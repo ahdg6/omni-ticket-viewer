@@ -1,0 +1,24 @@
+@layer tailwind-base,semi,components,utils;
+@layer tailwind-base {
+  @tailwind base;
+}
+@layer tailwind-components {
+  @tailwind components;
+}
+@layer tailwind-utils {
+  @tailwind utilities;
+}
+
+body[theme-mode="dark"] {
+  color-scheme: dark;
+}
+
+body[theme-mode="light"] {
+  color-scheme: light;
+}
+
+.kui-card.type-invisible {
+  border: none;
+  background: none;
+  padding: 0;
+}

@@ -1,0 +1,36 @@
+[
+  {
+    "theme": "invisible",
+    "color": "",
+    "size": "lg",
+    "expand": false,
+    "modules": [
+      {
+        "type": "container",
+        "elements": [
+          {
+            "type": "image",
+            "src": "https:\/\/img.kookapp.cn\/assets\/2024-07\/14\/0VpduFCuA11fk0pg.png",
+            "alt": "",
+            "size": "lg",
+            "circle": false,
+            "title": "",
+            "elements": []
+          }
+        ]
+      },
+      {
+        "type": "section",
+        "mode": "left",
+        "accessory": null,
+        "text": {
+          "type": "kmarkdown",
+          "content": "是不是type不对什么的……？",
+          "elements": []
+        },
+        "elements": []
+      }
+    ],
+    "type": "card"
+  }
+]
