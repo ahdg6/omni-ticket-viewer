@@ -1,10 +1,12 @@
 import { useContext } from "react"
-import ThemeContext, { Theme } from "../contexts/ThemeContext"
+
 import type { Message, Participant } from "../types/ticket"
+
+import ThemeContext, { Theme } from "../contexts/ThemeContext"
+
+// @ts-expect-error Because the package is not typed
 import { MessagePreview } from "@kookapp/kook-message-preview"
 import { Avatar, Image } from "@douyinfe/semi-ui"
-
-import CardMessageExample from "../cardmessage-example.json"
 
 interface MessageProps {
   message: Message
@@ -54,20 +56,7 @@ function MessageContent({
   const messageContent = createMessageContent(message)
 
   return (
-    <>
-      <MessagePreview
-        type={messageType}
-        content={messageContent}
-        theme={theme}
-        external="https://cdn.jsdelivr.net/npm/@kookapp/kook-message-preview@0.0.4/dist/markdown-parse.0.0.10.js"
-      />
-      <MessagePreview
-        type="card"
-        content={CardMessageExample}
-        theme={theme}
-        external="https://cdn.jsdelivr.net/npm/@kookapp/kook-message-preview@0.0.4/dist/markdown-parse.0.0.10.js"
-      />
-    </>
+    <MessagePreview type={messageType} content={messageContent} theme={theme} />
   )
 }
 
