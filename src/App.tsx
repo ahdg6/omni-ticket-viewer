@@ -62,12 +62,20 @@ function App() {
 }
 
 function FetchError({ error }: { error: useFetch.UseFetchError }) {
-  const errorData = [
+  const errorItems = [
     { key: "Message", value: error.message },
     { key: "Status", value: error.status ?? "None" },
     { key: "Status Text", value: error.statusText ?? "None" },
     { key: "Stack", value: error.stack },
-  ]
+  ].map((item) => (
+    <Descriptions.Item
+      className="whitespace-pre-line"
+      key={item.key}
+      itemKey={item.key}
+    >
+      {item.value}
+    </Descriptions.Item>
+  ))
 
   return (
     <Banner
@@ -79,7 +87,7 @@ function FetchError({ error }: { error: useFetch.UseFetchError }) {
       className="max-w-5xl"
     >
       <div className="text-semi-color-text-0 text-sm">
-        <Descriptions data={errorData} />
+        <Descriptions>{errorItems}</Descriptions>
       </div>
     </Banner>
   )
