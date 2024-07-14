@@ -6,6 +6,17 @@ import { IconCopy, IconMoon, IconSun } from "@douyinfe/semi-icons"
 
 import ThemeContext, { type Theme } from "../contexts/ThemeContext"
 
+function getTimeString(seconds: number) {
+  const hours = Math.floor(seconds / 3600)
+  const remainingMinutes = Math.floor((seconds - 3600 * hours) % 60)
+  const remainingSeconds = seconds % 60
+  return `
+    ${hours > 0 ? hours + " 小时" : ""}
+    ${remainingMinutes > 0 ? remainingMinutes + " 分" : ""}${
+    remainingSeconds > 0 ? " " + remainingSeconds + " 秒" : ""
+  }`
+}
+
 export default function TicketHeader({
   ticket,
   updateTheme,
@@ -29,7 +40,7 @@ export default function TicketHeader({
                 <Avatar src={asker.avatarUrl} size="extra-extra-small" />
                 <span className="ml-1 font-semibold">{asker.name}</span>
               </div>
-              发起，持续 {ticket.parameters.duration}
+              发起，持续 {getTimeString(Number(ticket.parameters.duration))}
             </div>
           </>
         }
