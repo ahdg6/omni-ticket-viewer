@@ -3,7 +3,6 @@
 type Ticket = {
   ticketId: string
   asker: string
-  duration: number
   parameters: { [label: string]: string }
   participants: { [userId: string]: Participant }
   timeline: TimelineEvent[]
@@ -26,7 +25,7 @@ type TimelineEvent = {
 type Message = {
   senderId: string
   timestamp: string
-  content: TextContent | ImageContent | FileContent
+  content: TextContent | ImageContent | FileContent | CardContent
 }
 
 type TextContent = {
@@ -47,11 +46,16 @@ type FileContent = {
   size: number
 }
 
+type CardContent = {
+  type: "card"
+  cards: unknown[]
+}
+
 export type {
   Ticket,
   Participant,
   TimelineEvent,
-  TimelineEventLabel
+  TimelineEventLabel,
   Message,
   TextContent,
   ImageContent,

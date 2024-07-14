@@ -98,6 +98,8 @@ function createMessageContent(message: Message) {
         message.content.size,
         message.content.type
       )
+    case "card":
+      return JSON.stringify(message.content.cards)
     default:
       return ""
   }
