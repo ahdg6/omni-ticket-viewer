@@ -12,7 +12,10 @@ import TicketContent from "./components/TicketContent"
 function App() {
   const [theme, setTheme] = useState<Theme>("dark")
 
-  const { isLoading, data: ticket, error } = useFetch<Ticket>("/example.json")
+  const queryStrings = new URLSearchParams(window.location.search)
+  const srcUrl = queryStrings.get("src") ?? "/example.json"
+
+  const { isLoading, data: ticket, error } = useFetch<Ticket>(srcUrl)
 
   function updateTheme(theme: Theme) {
     setTheme(theme)
