@@ -1,17 +1,22 @@
+import { useState } from "react"
+
 import type { Ticket } from "./types/ticket"
 
-import SampleTicket from "./example.json"
-import MessageList from "./components/MessageList"
-import ThemeContext, { Theme } from "./contexts/ThemeContext"
-import { useContext, useState } from "react"
-import { Avatar, Button, Card, Layout, Timeline } from "@douyinfe/semi-ui"
+import ThemeContext, { type Theme } from "./contexts/ThemeContext"
+
 import TicketTimeline from "./components/TicketTimeline"
 import TicketParticipants from "./components/TicketParticipants"
+import MessageList from "./components/MessageList"
+
+import { Avatar, Button, Card, Layout } from "@douyinfe/semi-ui"
 import { IconCopy, IconMoon, IconSun } from "@douyinfe/semi-icons"
+
+import SampleTicket from "./example.json"
 
 function App() {
   const [theme, setTheme] = useState<Theme>("dark")
-  const themeContext = useContext(ThemeContext)
+
+  // @ts-expect-error I don't know why
   const ticket = SampleTicket as Ticket
 
   function updateTheme(theme: Theme) {
