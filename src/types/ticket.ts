@@ -2,11 +2,16 @@
 
 type Ticket = {
   ticketId: string
+  ticketTitle: string
   asker: string
   parameters: { [label: string]: string }
   participants: { [userId: string]: Participant }
   timeline: TimelineEvent[]
   conversation: Message[]
+  guildId: string
+  guildName: string
+  instanceId: string
+  instanceName: string
 }
 
 type Participant = {
@@ -23,6 +28,7 @@ type TimelineEvent = {
 }
 
 type Message = {
+  id: string
   senderId: string
   timestamp: string
   content: TextContent | ImageContent | FileContent | CardContent

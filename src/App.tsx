@@ -35,8 +35,8 @@ function App() {
         <Layout.Content className="flex">
           <div className="w-72 p-5 border-r-2 border-semi-color-border">
             <Card.Meta
-              title="服务器名称"
-              description="🆘 问题求助"
+              title={ticket.guildName}
+              description={ticket.instanceName}
               className="mb-2"
             />
             <TicketTimeline ticket={ticket} />
@@ -45,7 +45,7 @@ function App() {
             <div className="flex p-5 border-b-2 border-semi-color-border">
               <Card.Meta
                 className="flex-1"
-                title="# 工单主题"
+                title={"# " + ticket.ticketTitle}
                 description={
                   <>
                     <div className="flex gap-2">

@@ -1,5 +1,10 @@
 {
   "ticketId": "123456",
+  "ticketTitle": "A ticket example",
+  "guildId": "123456789",
+  "guildName": "Example Server",
+  "instanceId": "jkafjksbfjksbdjfkbas",
+  "instanceName": "Example Ticket Instance",
   "asker": "u123",
   "parameters": {
     "duration": 171068
