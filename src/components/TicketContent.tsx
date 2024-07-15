@@ -26,7 +26,7 @@ export default function TicketContent({
         </div>
         <div className="flex flex-1">
           <div className="flex flex-1 flex-col h-full">
-            <div className="overflow-y-scroll p-4 flex-grow h-0">
+            <div className="overflow-y-scroll flex-grow h-0">
               <MessageList ticket={ticket} />
             </div>
           </div>

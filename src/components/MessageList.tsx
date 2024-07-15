@@ -16,7 +16,7 @@ export default function MessageList({ ticket }: MessageListProps) {
 
   return (
     <>
-      <div className="flex flex-col gap-4">{messages}</div>
+      <div className="flex flex-col">{messages}</div>
     </>
   )
 }

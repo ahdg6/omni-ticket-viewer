@@ -18,30 +18,53 @@ export default function Message({ message, participants }: MessageProps) {
   const theme = useContext(ThemeContext)
 
   return (
-    <>
-      <div className="flex gap-3">
-        <Dropdown
-          trigger="contextMenu"
-          position="bottomLeft"
-          render={
-            <Dropdown.Menu>
-              <Dropdown.Item>复制 ID</Dropdown.Item>
-            </Dropdown.Menu>
-          }
-        >
-          <Avatar src={sender.avatarUrl} alt={sender.name} />
-        </Dropdown>
-        <div className="message-item-right-side">
-          <div className="flex gap-2 items-baseline mb-1">
-            <span className="font-bold text-lg">{sender.name}</span>
-            <span className="text-xs opacity-80">
-              {new Date(message.timestamp).toLocaleString()}
-            </span>
+    <Dropdown
+      trigger="hover"
+      position="rightTopOver"
+      render={
+        <Dropdown.Menu>
+          <Dropdown.Item
+            onClick={() => navigator.clipboard.writeText(message.id)}
+          >
+            复制 ID
+          </Dropdown.Item>
+          <Dropdown.Item
+            disabled={message.content.type !== "text"}
+            onClick={() =>
+              message.content.type === "text" &&
+              navigator.clipboard.writeText(message.content.text)
+            }
+          >
+            复制原始内容
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      }
+    >
+      <div className="hover:bg-semi-color-bg-1 px-4 py-2">
+        <div className="flex gap-3">
+          <Dropdown
+            trigger="contextMenu"
+            position="bottomLeft"
+            render={
+              <Dropdown.Menu>
+                <Dropdown.Item>复制 ID</Dropdown.Item>
+              </Dropdown.Menu>
+            }
+          >
+            <Avatar src={sender.avatarUrl} alt={sender.name} />
+          </Dropdown>
+          <div className="message-item-right-side">
+            <div className="flex gap-2 items-baseline mb-1">
+              <span className="font-bold text-lg">{sender.name}</span>
+              <span className="text-xs opacity-80">
+                {new Date(message.timestamp).toLocaleString()}
+              </span>
+            </div>
+            <MessageContent message={message} theme={theme} />
           </div>
-          <MessageContent message={message} theme={theme} />
         </div>
       </div>
-    </>
+    </Dropdown>
   )
 }
 
