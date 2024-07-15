@@ -1,4 +1,4 @@
-import { Avatar } from "@douyinfe/semi-ui"
+import { Avatar, Dropdown } from "@douyinfe/semi-ui"
 import { Ticket } from "../types/ticket"
 
 interface TicketParticipantsProps {
@@ -11,18 +11,29 @@ export default function TicketParticipants({
   const participants = ticket.participants
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col">
       {Object.keys(participants).map((participantId) => {
         const participant = participants[participantId]
         return (
-          <div key={participantId} className="flex gap-3 items-center">
-            <Avatar
-              src={participant.avatarUrl}
-              alt={participant.name}
-              size="small"
-            />
-            <span>{participant.name}</span>
-          </div>
+          <Dropdown
+            key={participantId}
+            trigger="contextMenu"
+            position="bottomLeft"
+            render={
+              <Dropdown.Menu>
+                <Dropdown.Item>复制 ID</Dropdown.Item>
+              </Dropdown.Menu>
+            }
+          >
+            <div className="flex gap-3 items-center hover:bg-semi-color-bg-1 p-1 cursor-pointer">
+              <Avatar
+                src={participant.avatarUrl}
+                alt={participant.name}
+                size="small"
+              />
+              <span>{participant.name}</span>
+            </div>
+          </Dropdown>
         )
       })}
     </div>

@@ -6,7 +6,7 @@ import ThemeContext, { Theme } from "../contexts/ThemeContext"
 
 // @ts-expect-error Because the package is not typed
 import { MessagePreview } from "@kookapp/kook-message-preview"
-import { Avatar, Typography, Image } from "@douyinfe/semi-ui"
+import { Avatar, Typography, Image, Dropdown } from "@douyinfe/semi-ui"
 
 interface MessageProps {
   message: Message
@@ -20,7 +20,17 @@ export default function Message({ message, participants }: MessageProps) {
   return (
     <>
       <div className="flex gap-3">
-        <Avatar src={sender.avatarUrl} alt={sender.name} />
+        <Dropdown
+          trigger="contextMenu"
+          position="bottomLeft"
+          render={
+            <Dropdown.Menu>
+              <Dropdown.Item>复制 ID</Dropdown.Item>
+            </Dropdown.Menu>
+          }
+        >
+          <Avatar src={sender.avatarUrl} alt={sender.name} />
+        </Dropdown>
         <div className="message-item-right-side">
           <div className="flex gap-2 items-baseline mb-1">
             <span className="font-bold text-lg">{sender.name}</span>
