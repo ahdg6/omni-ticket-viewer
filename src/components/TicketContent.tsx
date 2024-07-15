@@ -30,8 +30,8 @@ export default function TicketContent({
               <MessageList ticket={ticket} />
             </div>
           </div>
-          <div className="flex flex-col w-72 p-4 space-y-2 border-l-2 border-semi-color-border">
-            <Card.Meta title="参与者" />
+          <div className="flex flex-col w-72 space-y-2 border-l-2 border-semi-color-border">
+            <Card.Meta className="pl-4 pt-4" title="参与者" />
             <div className="space-y-2 flex-grow h-0 overflow-y-scroll">
               <TicketParticipants ticket={ticket} />
             </div>

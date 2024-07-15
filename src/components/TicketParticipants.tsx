@@ -25,7 +25,7 @@ export default function TicketParticipants({
               </Dropdown.Menu>
             }
           >
-            <div className="flex gap-3 items-center hover:bg-semi-color-bg-1 p-1 cursor-pointer">
+            <div className="flex gap-3 items-center hover:bg-semi-color-bg-1 mx-4 p-1 rounded-md cursor-pointer">
               <Avatar
                 src={participant.avatarUrl}
                 alt={participant.name}
