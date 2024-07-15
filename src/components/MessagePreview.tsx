@@ -6,7 +6,7 @@ import ThemeContext, { Theme } from "../contexts/ThemeContext"
 
 // @ts-expect-error Because the package is not typed
 import { MessagePreview } from "@kookapp/kook-message-preview"
-import { Avatar, Image } from "@douyinfe/semi-ui"
+import { Avatar, Typography, Image } from "@douyinfe/semi-ui"
 
 interface MessageProps {
   message: Message
@@ -56,7 +56,28 @@ function MessageContent({
   const messageContent = createMessageContent(message)
 
   return (
-    <MessagePreview type={messageType} content={messageContent} theme={theme} />
+    <MessagePreview
+      type={messageType}
+      content={messageContent}
+      theme={theme}
+      customMetUserRender={(id: string) => customMentionRenderer("user", id)}
+      customRoleRender={(id: string) => customMentionRenderer("role", id)}
+      customChannelRender={(id: string) => customMentionRenderer("channel", id)}
+    />
+  )
+}
+
+function customMentionRenderer(type: string, id: string) {
+  return (
+    <Typography.Text
+      link={true}
+      copyable={{
+        content: id,
+        copyTip: "复制 ID",
+      }}
+    >
+      @{type}:{id}
+    </Typography.Text>
   )
 }
 

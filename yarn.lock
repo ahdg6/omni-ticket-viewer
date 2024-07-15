@@ -480,9 +480,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@kookapp/kook-message-preview@npm:^0.0.5":
-  version: 0.0.5
-  resolution: "@kookapp/kook-message-preview@npm:0.0.5"
+"@kookapp/kook-message-preview@npm:^0.0.7":
+  version: 0.0.7
+  resolution: "@kookapp/kook-message-preview@npm:0.0.7"
   dependencies:
     "@kaiheila/kui-lib": "npm:^0.0.88"
     highlight.js: "npm:^11.9.0"
@@ -490,7 +490,7 @@ __metadata:
   peerDependencies:
     react: ">=16.9.0"
     react-dom: ">=16.9.0"
-  checksum: 10c0/f9a794263e33d0a2093e253d83c71ecef8a728acd7df42870448d7335729513cdb9594043176e9dde4ed20c864f6660df3e0bde31771ad237a50c1ab7175e5e2
+  checksum: 10c0/ba862bf10b962af5d1a01646cd53b875063cea0f7a043d0da96fe2970556c836cd8363d6e3a8487fc52f52229506af136524bb00d5d0fe26437318069ef0a84d
   languageName: node
   linkType: hard
 
@@ -3591,7 +3591,7 @@ __metadata:
   dependencies:
     "@douyinfe/semi-icons": "npm:^2.62.0"
     "@douyinfe/semi-ui": "npm:^2.62.0"
-    "@kookapp/kook-message-preview": "npm:^0.0.5"
+    "@kookapp/kook-message-preview": "npm:^0.0.7"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"
     "@typescript-eslint/eslint-plugin": "npm:^7.16.0"
