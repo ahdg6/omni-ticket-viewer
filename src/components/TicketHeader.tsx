@@ -1,6 +1,6 @@
 import { useContext } from "react"
 
-import { Avatar, Button, Card } from "@douyinfe/semi-ui"
+import { Avatar, Button, Card, Tooltip } from "@douyinfe/semi-ui"
 import { Ticket } from "../types/ticket"
 import { IconCopy, IconMoon, IconSun } from "@douyinfe/semi-icons"
 
@@ -46,19 +46,31 @@ export default function TicketHeader({
         }
       />
       <div className="flex">
-        <Button
-          theme="borderless"
-          type="tertiary"
-          size="large"
-          icon={theme === "dark" ? <IconMoon /> : <IconSun />}
-          onClick={() => updateTheme(theme === "dark" ? "light" : "dark")}
-        />
-        <Button
-          theme="borderless"
-          type="tertiary"
-          size="large"
-          icon={<IconCopy />}
-        />
+        <Tooltip content={"切换颜色模式"} position="bottom">
+          <Button
+            theme="borderless"
+            type="tertiary"
+            size="large"
+            icon={theme === "dark" ? <IconMoon /> : <IconSun />}
+            onClick={() => updateTheme(theme === "dark" ? "light" : "dark")}
+          />
+        </Tooltip>
+        <Tooltip content={"复制查看链接"} position="bottomRight">
+          <Button
+            theme="borderless"
+            type="tertiary"
+            size="large"
+            icon={<IconCopy />}
+            onClick={() => {
+              const url = new URL(window.location.href)
+              const src = url.searchParams.get("src")
+
+              navigator.clipboard.writeText(
+                `${url.origin}${src ? "?src=" + src : ""}`
+              )
+            }}
+          />
+        </Tooltip>
       </div>
     </div>
   )
