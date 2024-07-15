@@ -6,15 +6,23 @@ import { IconCopy, IconMoon, IconSun } from "@douyinfe/semi-icons"
 
 import ThemeContext, { type Theme } from "../contexts/ThemeContext"
 
-function getTimeString(seconds: number) {
-  const hours = Math.floor(seconds / 3600)
-  const remainingMinutes = Math.floor((seconds - 3600 * hours) % 60)
-  const remainingSeconds = seconds % 60
-  return `
-    ${hours > 0 ? hours + " 小时" : ""}
-    ${remainingMinutes > 0 ? remainingMinutes + " 分" : ""}${
-    remainingSeconds > 0 ? " " + remainingSeconds + " 秒" : ""
-  }`
+function getTimeString(milliseconds: number): string {
+    // 将毫秒转换为总秒数
+    let seconds = Math.floor(milliseconds / 1000);
+    let minutes = Math.floor(seconds / 60);
+    let hours = Math.floor(minutes / 60);
+
+    // 计算剩余的分钟和秒数
+    minutes = minutes % 60;
+    seconds = seconds % 60;
+
+    // 构建输出字符串
+    let result = [];
+    if (hours > 0) result.push(`${hours}小时`);
+    if (minutes > 0) result.push(`${minutes}分`);
+    if (seconds > 0) result.push(`${seconds}秒`);
+
+    return result.join(" ") || "0秒";  // 如果结果为空（即所有都为0），则返回"0秒"
 }
 
 export default function TicketHeader({
