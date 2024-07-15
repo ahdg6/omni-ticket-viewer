@@ -1,6 +1,6 @@
 import { useContext } from "react"
 
-import { Avatar, Button, Card, Tooltip } from "@douyinfe/semi-ui"
+import { Avatar, Button, Card, Tooltip, Typography } from "@douyinfe/semi-ui"
 import { Ticket } from "../types/ticket"
 import { IconCopy, IconMoon, IconSun } from "@douyinfe/semi-icons"
 
@@ -31,7 +31,20 @@ export default function TicketHeader({
     <div className="flex p-5">
       <Card.Meta
         className="flex-1"
-        title={"# " + ticket.ticketTitle}
+        title={
+          <div className="space-x-1">
+            <span># {ticket.ticketTitle}</span>
+            <Typography.Text
+              type="tertiary"
+              size="small"
+              copyable={{
+                copyTip: "复制工单 ID",
+              }}
+            >
+              {ticket.ticketId}
+            </Typography.Text>
+          </div>
+        }
         description={
           <>
             <div className="flex gap-2">
