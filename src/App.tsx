@@ -1,96 +1,86 @@
-import { useState } from "react"
+import React, {useState, useCallback, useEffect} from 'react';
+import { Upload, Button, Layout, Card, Typography } from '@douyinfe/semi-ui';
+import { IconUpload } from '@douyinfe/semi-icons';
+import { useDropzone } from 'react-dropzone';
 
-import useFetch from "react-fetch-hook"
+import ThemeContext, { Theme } from './contexts/ThemeContext';
+import useFetch from 'react-fetch-hook';
+import TicketContent from './components/TicketContent';
+import type { Ticket } from './types/ticket';
 
-import type { Ticket } from "./types/ticket"
-
-import ThemeContext, { type Theme } from "./contexts/ThemeContext"
-
-import { Banner, Descriptions, Layout, Spin } from "@douyinfe/semi-ui"
-import TicketContent from "./components/TicketContent"
-
-function App() {
-  const [theme, setTheme] = useState<Theme>("dark")
-
-  const queryStrings = new URLSearchParams(window.location.search)
-  const srcUrl = queryStrings.get("src") ?? "/example.json"
-
-  const { isLoading, data: ticket, error } = useFetch<Ticket>(srcUrl)
-
-  function updateTheme(theme: Theme) {
-    setTheme(theme)
-
-    updateThemeInternal(theme)
-  }
-
-  function updateThemeInternal(theme: Theme) {
-    const body = document.body
-    body.setAttribute("theme-mode", theme)
-  }
-
-  updateThemeInternal(theme)
-
-  const statusContent = isLoading ? (
-    <Spin size="large" tip="Loading Ticket" style={{ paddingRight: "200px" }} />
-  ) : error ? (
-    <FetchError error={error} />
-  ) : !ticket ? (
-    <Banner
-      fullMode={false}
-      closeIcon={null}
-      type="danger"
-      description="加载完成的时，ticket 和 error 不应该为 null/undefined。但是这两就是空的。"
-    />
-  ) : null
-
-  const layoutContent =
-    isLoading || error || !ticket ? (
-      <div className="h-full flex items-center justify-center">
-        {statusContent}
-      </div>
-    ) : (
-      <TicketContent ticket={ticket} updateTheme={updateTheme} />
-    )
-
-  return (
-    <ThemeContext.Provider value={theme}>
-      <Layout className="bg-semi-color-bg-0 text-semi-color-text-0 h-screen overflow-hidden">
-        <Layout.Content>{layoutContent}</Layout.Content>
-      </Layout>
-    </ThemeContext.Provider>
-  )
+interface UploadAreaProps {
+    onFileLoaded: (srcUrl: string) => void;
 }
 
-function FetchError({ error }: { error: useFetch.UseFetchError }) {
-  const errorItems = [
-    { key: "Message", value: error.message },
-    { key: "Status", value: error.status ?? "None" },
-    { key: "Status Text", value: error.statusText ?? "None" },
-    { key: "Stack", value: error.stack },
-  ].map((item) => (
-    <Descriptions.Item
-      className="whitespace-pre-line"
-      key={item.key}
-      itemKey={item.key}
-    >
-      {item.value}
-    </Descriptions.Item>
-  ))
+const UploadArea: React.FC<UploadAreaProps> = ({ onFileLoaded }) => {
+    return (
+            <Card
+                style={{ width: 'auto', maxWidth: 600, padding: '20px', margin: '20px' }}
+                title="上传或拖拽 JSON 文件"
+                className="flex-1 text-center"
+            >
+                <Typography.Text type="secondary">
+                    拖拽 JSON 文件到这里或点击下方按钮上传
+                </Typography.Text>
+                <Upload onChange={({ currentFile }) => onFileLoaded(currentFile.url || '')}>
+                    <Button icon={<IconUpload />} theme="light" style={{ marginTop: 20 }}>
+                        点击上传
+                    </Button>
+                </Upload>
+            </Card>
+    );
+};
 
-  return (
-    <Banner
-      fullMode={false}
-      closeIcon={null}
-      type="danger"
-      title="无法加载工单内容"
-      description="请检查你的网络连接是否正常和工单数据链接是否正确。"
-      className="max-w-5xl"
-    >
-      <div className="text-semi-color-text-0 text-sm">
-        <Descriptions>{errorItems}</Descriptions>
-      </div>
-    </Banner>
-  )
-}
 
-export default App
+const App: React.FC = () => {
+    const [theme, setTheme] = useState<Theme>('dark');
+    const [srcUrl, setSrcUrl] = useState<string>('');
+
+    const { isLoading, data: ticket, error } = useFetch<Ticket>(srcUrl, { depends: [srcUrl] });
+
+    useEffect(() => {
+        updateThemeInternal(theme);
+    }, [theme]); // 依赖于 theme，每当 theme 更改时执行
+
+    function updateTheme(theme: Theme) {
+        setTheme(theme);
+        updateThemeInternal(theme);
+    }
+
+    function updateThemeInternal(theme: Theme) {
+        const body = document.body;
+        body.setAttribute('theme-mode', theme);
+    }
+    const onDrop = useCallback((acceptedFiles: File[]) => {
+        const file = acceptedFiles[0];
+        const reader = new FileReader();
+        reader.onload = () => {
+            setSrcUrl(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+    }, []);
+
+    const { getRootProps } = useDropzone({ onDrop, noClick: true, noKeyboard: true });
+    return (
+        <ThemeContext.Provider value={theme}>
+            <div {...getRootProps()} className="h-screen overflow-hidden">
+                <Layout className="bg-semi-color-bg-0 text-semi-color-text-0 h-screen overflow-hidden">
+                    <Layout.Content>
+                        {!srcUrl ? (
+                            <div className="w-full h-full flex justify-center items-center">
+                                <UploadArea onFileLoaded={setSrcUrl}/>
+                            </div>
+                        ) : isLoading || error || !ticket ? (
+                            <Typography.Text
+                                style={{textAlign: 'center'}}>加载中或出错，请检查文件是否正确</Typography.Text>
+                        ) : (
+                            <TicketContent ticket={ticket} updateTheme={updateTheme}/>
+                        )}
+                    </Layout.Content>
+                </Layout>
+            </div>
+        </ThemeContext.Provider>
+);
+};
+
+export default App;

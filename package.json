@@ -15,6 +15,7 @@
     "@kookapp/kook-message-preview": "^0.0.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-dropzone": "^14.2.3",
     "react-fetch-hook": "^1.9.5"
   },
   "devDependencies": {
@@ -31,7 +32,8 @@
     "postcss": "^8.4.39",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.5.3",
-    "vite": "^5.3.3"
+    "vite": "^5.3.3",
+    "vite-plugin-singlefile": "^2.0.1"
   },
   "resolutions": {
     "@kaiheila/kui-lib": "0.0.97"
