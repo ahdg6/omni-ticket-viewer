@@ -1,8 +1,7 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Upload, Button, Layout, Card, Typography } from '@douyinfe/semi-ui';
 import { IconUpload } from '@douyinfe/semi-icons';
 import { useDropzone } from 'react-dropzone';
-
 import ThemeContext, { Theme } from './contexts/ThemeContext';
 import useFetch from 'react-fetch-hook';
 import TicketContent from './components/TicketContent';
@@ -14,27 +13,36 @@ interface UploadAreaProps {
 
 const UploadArea: React.FC<UploadAreaProps> = ({ onFileLoaded }) => {
     return (
-            <Card
-                style={{ width: 'auto', maxWidth: 600, padding: '20px', margin: '20px' }}
-                title="上传或拖拽 JSON 文件"
-                className="flex-1 text-center"
-            >
-                <Typography.Text type="secondary">
-                    拖拽 JSON 文件到这里或点击下方按钮上传
-                </Typography.Text>
-                <Upload onChange={({ currentFile }) => onFileLoaded(currentFile.url || '')}>
-                    <Button icon={<IconUpload />} theme="light" style={{ marginTop: 20 }}>
-                        点击上传
-                    </Button>
-                </Upload>
-            </Card>
+        <Card
+            style={{ width: 'auto', maxWidth: 600, padding: '20px', margin: '20px' }}
+            title="上传或拖拽 JSON 文件"
+            className="flex-1 text-center"
+        >
+            <Typography.Text type="secondary">
+                拖拽 JSON 文件到这里或点击下方按钮上传
+            </Typography.Text>
+            <Upload onChange={({ currentFile }) => onFileLoaded(currentFile.url || '')}>
+                <Button icon={<IconUpload />} theme="light" style={{ marginTop: 20 }}>
+                    点击上传
+                </Button>
+            </Upload>
+        </Card>
     );
 };
-
 
 const App: React.FC = () => {
     const [theme, setTheme] = useState<Theme>('dark');
     const [srcUrl, setSrcUrl] = useState<string>('');
+
+    // 获取 URL 参数中的 srcUrl
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const srcUrlParam = urlParams.get('src');
+        const proxyDomain = import.meta.env.PROXY;
+        if (srcUrlParam) {
+            setSrcUrl(proxyDomain + srcUrlParam);
+        }
+    }, []);
 
     const { isLoading, data: ticket, error } = useFetch<Ticket>(srcUrl, { depends: [srcUrl] });
 
@@ -51,6 +59,7 @@ const App: React.FC = () => {
         const body = document.body;
         body.setAttribute('theme-mode', theme);
     }
+
     const onDrop = useCallback((acceptedFiles: File[]) => {
         const file = acceptedFiles[0];
         const reader = new FileReader();
@@ -61,6 +70,7 @@ const App: React.FC = () => {
     }, []);
 
     const { getRootProps } = useDropzone({ onDrop, noClick: true, noKeyboard: true });
+
     return (
         <ThemeContext.Provider value={theme}>
             <div {...getRootProps()} className="h-screen overflow-hidden">
@@ -68,19 +78,19 @@ const App: React.FC = () => {
                     <Layout.Content>
                         {!srcUrl ? (
                             <div className="w-full h-full flex justify-center items-center">
-                                <UploadArea onFileLoaded={setSrcUrl}/>
+                                <UploadArea onFileLoaded={setSrcUrl} />
                             </div>
                         ) : isLoading || error || !ticket ? (
                             <Typography.Text
-                                style={{textAlign: 'center'}}>加载中或出错，请检查文件是否正确</Typography.Text>
+                                style={{ textAlign: 'center' }}>加载中或出错，请检查文件是否正确</Typography.Text>
                         ) : (
-                            <TicketContent ticket={ticket} updateTheme={updateTheme}/>
+                            <TicketContent ticket={ticket} updateTheme={updateTheme} />
                         )}
                     </Layout.Content>
                 </Layout>
             </div>
         </ThemeContext.Provider>
-);
+    );
 };
 
 export default App;
